@@ -3,5 +3,15 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "cSpell.words": [
+    "tailwindcss"
+  ],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }
