@@ -1,5 +1,11 @@
 # @datepicker-suggest/react
 
+## 0.0.3
+
+### Patch Changes
+
+- fix: api to use date & styling
+
 ## 0.0.2
 
 ### Patch Changes

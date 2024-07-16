@@ -1,36 +1,33 @@
-"use client"
-import { DateSuggestion } from '@datepicker-suggest/core';
-import { DatePickerSuggest } from '@datepicker-suggest/react';
+"use client";
+import { DatePickerSuggest } from "@datepicker-suggest/react";
 import "@datepicker-suggest/react/index.css";
-import { startOfDay } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { startOfDay } from "date-fns";
+import { useEffect, useState } from "react";
 
 // const customRenderer = (dateSuggestion: DateSuggestion) => {
 //   return <div>{dateSuggestion.date.toISOString()}</div>;
 // };
 
 export default function Home() {
-  const [myDateSuggestion, setMyDateSuggestion] = useState<DateSuggestion | null>(null);
+  const [dateValue, setDateValue] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
     setTimeout(() => {
-      setMyDateSuggestion({
-        date: startOfDay(new Date()),
-        label: 'Start of today',
-        id: 'start-of-today'
-      });
+      setDateValue(startOfDay(new Date()));
     }, 2000);
   }, []);
 
   return (
-
-
     <div>
       <main>
-        <DatePickerSuggest 
-          value={myDateSuggestion}
-          onChange={(dateSuggestion) => console.log('bog app result: dateSuggestion', dateSuggestion)}
-           />
+        <div className="mx-auto h-screen w-72 pt-20">
+          <DatePickerSuggest
+            value={dateValue}
+            onChange={(dateUpdate) =>
+              console.log("bog app result: dateUpdate", dateUpdate)
+            }
+          />
+        </div>
       </main>
     </div>
   );
