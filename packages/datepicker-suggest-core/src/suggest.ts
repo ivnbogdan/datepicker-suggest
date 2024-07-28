@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { DateSuggestion } from "./models/date-suggestion.js";
 import { toInputTokens } from "./models/input-tokens.js";
 import { DayMonthTokensStrategy } from "./strategies/day-month-tokens-stategy.js";
@@ -22,8 +23,27 @@ export class SuggestionEngine {
 
   generateSuggestions(input: string): DateSuggestion[] {
     const tokens = toInputTokens(input);
-    return this.strategies.flatMap((strategy) =>
+    const result = this.strategies.flatMap((strategy) =>
       strategy.generateSuggestions(tokens)
     );
+
+    return result
+      .filter(
+        (suggestion, index, self) =>
+          index === self.findIndex((t) => t.id === suggestion.id)
+      )
+      .map((suggestion) => {
+        if (
+          suggestion.date.getHours() === 0 &&
+          suggestion.date.getMinutes() === 0
+        ) {
+          return suggestion;
+        }
+
+        return {
+          ...suggestion,
+          label: `${suggestion.label} ${format(suggestion.date, "HH:mm")}`,
+        };
+      });
   }
 }
