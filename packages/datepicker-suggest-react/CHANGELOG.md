@@ -1,5 +1,13 @@
 # @datepicker-suggest/react
 
+## 0.0.6
+
+### Patch Changes
+
+- publish fix
+- Updated dependencies
+  - @datepicker-suggest/core@0.0.6
+
 ## 0.0.5
 
 ### Patch Changes
