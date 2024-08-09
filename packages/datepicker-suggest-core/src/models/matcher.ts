@@ -1,8 +1,11 @@
-import { setHours, setMinutes, setSeconds, setYear } from "date-fns";
+import { format, setHours, setMinutes, setSeconds, setYear } from "date-fns";
 import { DateSuggestion } from "./date-suggestion.js";
 import { InputToken, parseTime } from "./input-tokens.js";
 
-export type MetaDateModifier = (date: Date, inputTokens: InputToken[]) => Date;
+export type MetaDateModifier = (
+  date: Date,
+  inputTokens: InputToken[]
+) => { date: Date; labelSuffix?: string };
 
 export const YearMetaApplier: MetaDateModifier = (
   date: Date,
@@ -10,9 +13,9 @@ export const YearMetaApplier: MetaDateModifier = (
 ) => {
   const year = inputTokens.find((i) => i.type === "year")?.value;
   if (!year) {
-    return date;
+    return { date };
   }
-  return setYear(date, +year);
+  return { date: setYear(date, +year), labelSuffix: ` ${year}` };
 };
 
 export const TimeMetaApplier: MetaDateModifier = (
@@ -21,12 +24,13 @@ export const TimeMetaApplier: MetaDateModifier = (
 ) => {
   const time = inputTokens.find((i) => i.type === "time");
   if (!time) {
-    return date;
+    return { date };
   }
 
   const { hours, minutes } = parseTime(time.value);
 
-  return setHours(setMinutes(setSeconds(date, 0), minutes), hours);
+  const dateResult = setHours(setMinutes(setSeconds(date, 0), minutes), hours);
+  return { date: dateResult, labelSuffix: ` ${format(dateResult, "HH:mm")}` };
 };
 
 export abstract class Matcher {

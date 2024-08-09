@@ -1,21 +1,10 @@
 "use client";
 import { DatePickerSuggest } from "@datepicker-suggest/react";
 import "@datepicker-suggest/react/index.css";
-import { startOfDay } from "date-fns";
-import { useEffect, useState } from "react";
-
-// const customRenderer = (dateSuggestion: DateSuggestion) => {
-//   return <div>{dateSuggestion.date.toISOString()}</div>;
-// };
+import { useState } from "react";
 
 export default function Home() {
-  const [dateValue, setDateValue] = useState<Date | undefined>(undefined);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setDateValue(startOfDay(new Date()));
-    }, 2000);
-  }, []);
+  const [dateValue] = useState<Date | undefined>(undefined);
 
   return (
     <div>
@@ -26,6 +15,8 @@ export default function Home() {
             onChange={(dateUpdate) =>
               console.log("bog app result: dateUpdate", dateUpdate)
             }
+            initialSuggestion="now"
+            optionsSuggestions={["now", "tomorrow", "yesterday"]}
           />
         </div>
       </main>

@@ -10,7 +10,11 @@ export abstract class SuggestionStrategy {
     const allItems = matchers.map((x) => {
       const dateSuggestion = x.getResult(inputTokens);
       x.additionalDateModifiers.forEach((modifier) => {
-        dateSuggestion.date = modifier(dateSuggestion.date, inputTokens);
+        const modifierResult = modifier(dateSuggestion.date, inputTokens);
+        dateSuggestion.date = modifierResult.date;
+        if (modifierResult.labelSuffix) {
+          dateSuggestion.label = `${dateSuggestion.label} ${modifierResult.labelSuffix}`;
+        }
       });
 
       return dateSuggestion;

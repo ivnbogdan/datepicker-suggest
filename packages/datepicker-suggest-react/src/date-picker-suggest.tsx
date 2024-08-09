@@ -11,28 +11,18 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
-
-const DropdownIcon = () => (
-  <svg
-    width="24px"
-    height="24px"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z"
-      fill="currentColor"
-    />
-  </svg>
-);
+import { DropdownIcon } from "./icons/dropdown-icon.js";
 
 type DatePickerSuggestProps = {
   value?: Date;
+  suggestion?: DateSuggestion;
   onChange?: (date: Date | undefined) => void;
+  onSuggestionChange?: (suggestion: DateSuggestion | undefined) => void;
   panelClassName?: string;
   suggestionRenderer?: (dateOption: { date: Date; label: string }) => ReactNode;
   displayValue?: (dateOption: { date: Date; label: string }) => string;
+  initialSuggestion?: string;
+  optionsSuggestions?: string[];
 };
 
 const defaultSuggestionRenderer = (dateSuggestion: DateSuggestion) => (
@@ -58,14 +48,14 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
     panelClassName += " w-[var(--input-width)]";
   }
 
-  const suggest = new SuggestionEngine();
+  const engine = new SuggestionEngine();
 
   const [inputValue, setInputValue] = useState("");
   const [result, setResult] = useState<DateSuggestion[]>([]);
 
   const [selectedDate, setSelectedDate] = useState<DateSuggestion | null>(null);
 
-  console.log("bog: props.value", props.value);
+  const initializeOptionsSuggestions = (labelSuggestions: string[]) => {};
 
   useEffect(() => {
     if (props.value?.getTime() != selectedDate?.date?.getTime()) {
@@ -80,32 +70,74 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
     }
   }, [props.value]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setInputValue(value);
-    const suggestions = suggest.generateSuggestions(value);
-    setResult(suggestions);
-  };
+  useEffect(() => {
+    if (
+      !!props.suggestion?.date &&
+      props.suggestion?.date?.getTime() != selectedDate?.date?.getTime()
+    ) {
+      setSelectedDate(props.suggestion);
+    }
+  }, [props.suggestion]);
 
   useEffect(() => {
-    props.onChange?.(selectedDate?.date);
-  }, [selectedDate]);
+    if (
+      !props.initialSuggestion ||
+      props.initialSuggestion === selectedDate?.label
+    ) {
+      return;
+    }
+    const suggestion = engine.generateExactSuggestion(props.initialSuggestion);
+    if (suggestion) {
+      handleOptionChange(suggestion);
+    }
+  }, [props.initialSuggestion]);
 
+  useEffect(() => {
+    const labelSuggestions = props.optionsSuggestions;
+    if (!labelSuggestions || labelSuggestions.length === 0) {
+      return;
+    }
+    const optionResults = labelSuggestions
+      .filter((label) => !!label)
+      .map((label) => engine.generateExactSuggestion(label))
+      .filter((opt): opt is DateSuggestion => !!opt);
+
+    setResult(optionResults);
+  }, [props.optionsSuggestions]);
+
+  const handleTextInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setInputValue(value);
+
+    if (value) {
+      const suggestions = engine.generateSuggestions(value);
+      setResult(suggestions);
+    } else if (props.optionsSuggestions) {
+      initializeOptionsSuggestions(props.optionsSuggestions);
+    }
+  };
+
+  const handleOptionChange = (suggestion: DateSuggestion) => {
+    setSelectedDate(suggestion);
+
+    props.onChange?.(suggestion?.date);
+    props.onSuggestionChange?.(suggestion ?? undefined);
+  };
   return (
     <>
       <Combobox
         as="div"
         value={selectedDate}
-        onChange={(date) => {
-          setSelectedDate(date);
-        }}
+        onChange={handleOptionChange}
         onClose={() => setInputValue("")}
       >
         <div className="relative">
           <ComboboxInput
             autoComplete="off"
-            className="w-full rounded-lg border-none bg-white/5 py-1.5 pr-8 pl-3 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            onChange={handleInputChange}
+            className="w-full rounded-lg border border-input bg-white/5 py-1.5 pr-8 pl-3 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+            onChange={handleTextInputChange}
             onBlur={() => setInputValue("")}
             displayValue={(dateSuggestion) =>
               !!dateSuggestion

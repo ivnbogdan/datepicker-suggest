@@ -1,9 +1,10 @@
-import { format } from "date-fns";
 import { DateSuggestion } from "./models/date-suggestion.js";
 import { toInputTokens } from "./models/input-tokens.js";
 import { DayMonthTokensStrategy } from "./strategies/day-month-tokens-stategy.js";
 import { DaysStrategy } from "./strategies/days-strategy.js";
+import { HourStrategy } from "./strategies/hour-strategy.js";
 import { MonthsStrategy } from "./strategies/months-strategy.js";
+import { NowStrategy } from "./strategies/now-strategy.js";
 import { SuggestionStrategy } from "./strategies/suggestion-strategy.js";
 import { WeeksStrategy } from "./strategies/weeks-strategy.js";
 import { YearsStrategy } from "./strategies/years-strategy.js";
@@ -18,6 +19,8 @@ export class SuggestionEngine {
       new MonthsStrategy(),
       new DayMonthTokensStrategy(),
       new YearsStrategy(),
+      new NowStrategy(),
+      new HourStrategy(),
     ];
   }
 
@@ -27,23 +30,18 @@ export class SuggestionEngine {
       strategy.generateSuggestions(tokens)
     );
 
-    return result
-      .filter(
-        (suggestion, index, self) =>
-          index === self.findIndex((t) => t.id === suggestion.id)
-      )
-      .map((suggestion) => {
-        if (
-          suggestion.date.getHours() === 0 &&
-          suggestion.date.getMinutes() === 0
-        ) {
-          return suggestion;
-        }
+    return result.filter(
+      (suggestion, index, self) =>
+        index === self.findIndex((t) => t.id === suggestion.id)
+    );
+  }
 
-        return {
-          ...suggestion,
-          label: `${suggestion.label} ${format(suggestion.date, "HH:mm")}`,
-        };
-      });
+  generateExactSuggestion(input: string): DateSuggestion | null {
+    const allSuggestions = this.generateSuggestions(input);
+    return (
+      allSuggestions.find(
+        (suggestion) => suggestion.label.toLowerCase() === input.toLowerCase()
+      ) ?? null
+    );
   }
 }

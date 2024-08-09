@@ -228,7 +228,7 @@ class LastMatcher extends Matcher {
   additionalDateModifiers: MetaDateModifier[] = [TimeMetaApplier];
 
   getDateValue(): Date {
-    return startOfDay(subMonths(new Date(), 1));
+    return startOfDay(startOfMonth(subMonths(new Date(), 1)));
   }
 }
 
