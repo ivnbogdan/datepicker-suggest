@@ -1,5 +1,11 @@
 # @datepicker-suggest/react
 
+## 0.0.7
+
+### Patch Changes
+
+- styling fixes & show dropdown btn prop
+
 ## 0.0.6
 
 ### Patch Changes

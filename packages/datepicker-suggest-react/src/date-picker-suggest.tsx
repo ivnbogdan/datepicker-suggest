@@ -19,6 +19,7 @@ type DatePickerSuggestProps = {
   onChange?: (date: Date | undefined) => void;
   onSuggestionChange?: (suggestion: DateSuggestion | undefined) => void;
   panelClassName?: string;
+  showDropdown?: boolean;
   suggestionRenderer?: (dateOption: { date: Date; label: string }) => ReactNode;
   displayValue?: (dateOption: { date: Date; label: string }) => string;
   initialSuggestion?: string;
@@ -92,8 +93,7 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
     }
   }, [props.initialSuggestion]);
 
-  useEffect(() => {
-    const labelSuggestions = props.optionsSuggestions;
+  const setResultFromOptions = (labelSuggestions: string[] | undefined) => {
     if (!labelSuggestions || labelSuggestions.length === 0) {
       return;
     }
@@ -103,6 +103,10 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
       .filter((opt): opt is DateSuggestion => !!opt);
 
     setResult(optionResults);
+  };
+
+  useEffect(() => {
+    setResultFromOptions(props.optionsSuggestions);
   }, [props.optionsSuggestions]);
 
   const handleTextInputChange = (
@@ -116,6 +120,8 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
       setResult(suggestions);
     } else if (props.optionsSuggestions) {
       initializeOptionsSuggestions(props.optionsSuggestions);
+    } else if (props.optionsSuggestions) {
+      setResultFromOptions(props.optionsSuggestions);
     }
   };
 
@@ -130,6 +136,7 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
       <Combobox
         as="div"
         value={selectedDate}
+        immediate={!props.showDropdown}
         onChange={handleOptionChange}
         onClose={() => setInputValue("")}
       >
@@ -145,28 +152,30 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
                 : ""
             }
           />
-          <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
-            <span
-              className="size-4 fill-white/60 group-data-[hover]:fill-white"
-              aria-hidden="true"
-            >
-              <DropdownIcon />
-            </span>
-          </ComboboxButton>
+          {props.showDropdown && (
+            <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
+              <span
+                className="size-4 fill-white/60 group-data-[hover]:fill-white"
+                aria-hidden="true"
+              >
+                <DropdownIcon />
+              </span>
+            </ComboboxButton>
+          )}
 
           {result.length > 0 && (
             <ComboboxOptions
               anchor="bottom"
               transition
-              className={`${panelClassName} rounded-xl border dark:text-white dark:bg-black text-black bg-white border-white/5 bg-white/5 p-1 [--anchor-gap:var(--spacing-1)] empty:invisible transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0`}
+              className={`${panelClassName} rounded-xl border border-input bg-white/5 p-1.5 [--anchor-gap:var(--spacing-1)] empty:invisible transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0`}
             >
               {result.map((suggestionResult) => (
                 <ComboboxOption
                   key={suggestionResult.id}
                   value={suggestionResult}
-                  className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+                  className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-gray-300/10"
                 >
-                  <div className="flex w-full text-sm/6 text-white">
+                  <div className="flex w-full text-sm/6">
                     {suggestionRenderer(suggestionResult)}
                   </div>
                 </ComboboxOption>
