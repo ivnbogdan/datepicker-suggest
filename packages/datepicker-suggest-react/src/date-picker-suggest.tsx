@@ -171,7 +171,7 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
             <ComboboxOptions
               anchor="bottom"
               transition
-              className={`${panelClassName} rounded-xl border border-input bg-white/5 p-1.5 [--anchor-gap:var(--spacing-1)] empty:invisible transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0`}
+              className={`rounded-xl border border-input bg-white/5 p-1.5 [--anchor-gap:var(--spacing-1)] empty:invisible transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0 ${panelClassName}`}
             >
               {result.map((suggestionResult) => (
                 <ComboboxOption
