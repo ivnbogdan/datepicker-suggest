@@ -23,17 +23,19 @@ jobs:
         with:
           node-version: 20.x
 
-      - name: install pnpm
+      - name: Install pnpm
         run: npm i pnpm@latest -g
+
       - name: Setup npmrc
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-      - name: setup pnpm config
+
+      - name: Setup pnpm config
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: Install Dependencies
         run: pnpm install
 
-      - name: create and publish versions
+      - name: Create and publish versions
         uses: changesets/action@v1
         with:
           version: pnpm ci:version
