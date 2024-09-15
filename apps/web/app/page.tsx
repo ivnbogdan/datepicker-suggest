@@ -3,7 +3,7 @@ import { DatePickerSuggest } from "@datepicker-suggest/react";
 import "@datepicker-suggest/react/index.css";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { format } from "date-fns";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -59,7 +59,10 @@ function Example() {
   );
 }`;
 
-  const customRenderer = (suggestion) => (
+  const customRenderer = (suggestion: {
+    date: Date;
+    label: string;
+  }): ReactNode => (
     <div className="flex justify-between items-center">
       <span className="font-semibold">{suggestion.label}</span>
       <span className="text-sm text-gray-500">
