@@ -24,7 +24,10 @@ type DatePickerSuggestProps = {
   displayValue?: (dateOption: { date: Date; label: string }) => string;
   initialSuggestion?: string;
   optionsSuggestions?: string[];
+  placeholder?: string;
 };
+
+const defaultPlaceholder = "Start typing a date or time...";
 
 const defaultSuggestionRenderer = (dateSuggestion: DateSuggestion) => (
   <>
@@ -142,6 +145,7 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
       >
         <div className="relative">
           <ComboboxInput
+            placeholder={props.placeholder ?? defaultPlaceholder}
             autoComplete="off"
             className="w-full rounded-lg border border-input bg-white/5 py-1.5 pr-8 pl-3 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
             onChange={handleTextInputChange}

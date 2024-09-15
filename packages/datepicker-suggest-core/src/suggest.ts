@@ -1,8 +1,9 @@
 import { DateSuggestion } from "./models/date-suggestion.js";
 import { toInputTokens } from "./models/input-tokens.js";
-import { DayMonthTokensStrategy } from "./strategies/day-month-tokens-stategy.js";
+import { DayMonthTokensStrategy } from "./strategies/day-month-tokens-strategy.js";
 import { DaysStrategy } from "./strategies/days-strategy.js";
 import { HourStrategy } from "./strategies/hour-strategy.js";
+import { MinuteStrategy } from "./strategies/minute-strategy.js";
 import { MonthsStrategy } from "./strategies/months-strategy.js";
 import { NowStrategy } from "./strategies/now-strategy.js";
 import { SuggestionStrategy } from "./strategies/suggestion-strategy.js";
@@ -21,6 +22,7 @@ export class SuggestionEngine {
       new YearsStrategy(),
       new NowStrategy(),
       new HourStrategy(),
+      new MinuteStrategy(),
     ];
   }
 

@@ -9,7 +9,7 @@ export const toInputTokens = (input: string): InputToken[] => {
     .filter((x) => !!x.trim())
     .map((x) => x.toLowerCase());
 
-  return strings.map((s) => {
+  const resultTokens: InputToken[] = strings.map((s) => {
     if (
       s.includes(":") ||
       s.includes(".") ||
@@ -37,10 +37,25 @@ export const toInputTokens = (input: string): InputToken[] => {
       };
     }
   });
+
+  const timeTokens = resultTokens.filter((t) => t.type === "time");
+  const singleTimeToken = timeTokens.length === 1 ? timeTokens[0] : null;
+  if (
+    singleTimeToken &&
+    (singleTimeToken.value === "am" || singleTimeToken.value === "pm")
+  ) {
+    const timeIndex = resultTokens.findIndex((t) => t.type === "time");
+    if (timeIndex >= 1 && resultTokens[timeIndex - 1]?.type === "index") {
+      resultTokens[timeIndex - 1]!.type = "time";
+    }
+  }
+
+  return resultTokens;
 };
 
 export const parseTime = (time: string) => {
-  const timeRegex = /^(\d{1,2})(?::|\.|)(\d{1,2})?(?:\s*(am|pm))?$/i;
+  const timeRegex =
+    /^(\d{1,2})(?::|\.|)(\d{1,2})?(?:\s*(am|pm))?|\d{1,2}\s*(am|pm)$/i;
   const match = time.match(timeRegex);
 
   if (!match) {

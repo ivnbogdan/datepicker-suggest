@@ -27,7 +27,11 @@ export const TimeMetaApplier: MetaDateModifier = (
     return { date };
   }
 
-  const { hours, minutes } = parseTime(time.value);
+  const allTimeValues = inputTokens
+    .filter((i) => i.type === "time")
+    .map((i) => i.value)
+    .join("");
+  const { hours, minutes } = parseTime(allTimeValues);
 
   const dateResult = setHours(setMinutes(setSeconds(date, 0), minutes), hours);
   return { date: dateResult, labelSuffix: ` ${format(dateResult, "HH:mm")}` };
