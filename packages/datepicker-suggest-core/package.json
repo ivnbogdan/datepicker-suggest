@@ -1,6 +1,6 @@
 {
   "name": "@datepicker-suggest/core",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "scripts": {
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",

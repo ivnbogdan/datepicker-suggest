@@ -1,5 +1,11 @@
 # @datepicker-suggest/core
 
+## 0.0.7
+
+### Patch Changes
+
+- minute-strategy
+
 ## 0.0.6
 
 ### Patch Changes
