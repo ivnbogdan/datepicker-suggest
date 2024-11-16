@@ -82,6 +82,16 @@ function Example() {
             date based on natural language.
           </p>
 
+          <video
+            className="w-full h-[400px] mb-8 rounded-lg"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="/datepicker-suggest/demo.webm" type="video/webm" />
+          </video>
+
           <h2 className="text-2xl font-semibold mt-8 mb-4">Installation</h2>
           <p className="mb-4">
             To get started, install the{" "}
