@@ -1,5 +1,11 @@
 # web
 
+## 0.1.11
+
+### Patch Changes
+
+- 18d48b1: chore: update demo video
+
 ## 0.1.10
 
 ### Patch Changes
