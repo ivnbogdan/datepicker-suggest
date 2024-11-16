@@ -1,5 +1,11 @@
 # @datepicker-suggest/react
 
+## 0.0.10
+
+### Patch Changes
+
+- 53fa1a2: class styling apply logic fixes
+
 ## 0.0.9
 
 ### Patch Changes

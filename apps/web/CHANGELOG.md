@@ -1,5 +1,13 @@
 # web
 
+## 0.1.9
+
+### Patch Changes
+
+- 53fa1a2: class styling apply logic fixes
+- Updated dependencies [53fa1a2]
+  - @datepicker-suggest/react@0.0.10
+
 ## 0.1.8
 
 ### Patch Changes
