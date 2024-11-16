@@ -18,7 +18,7 @@ type DatePickerSuggestProps = {
   suggestion?: DateSuggestion;
   onChange?: (date: Date | undefined) => void;
   onSuggestionChange?: (suggestion: DateSuggestion | undefined) => void;
-  panelClassName?: string;
+  className?: string;
   showDropdown?: boolean;
   suggestionRenderer?: (dateOption: { date: Date; label: string }) => ReactNode;
   displayValue?: (dateOption: { date: Date; label: string }) => string;
@@ -47,7 +47,7 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
   const suggestionRenderer =
     props.suggestionRenderer ?? defaultSuggestionRenderer;
   const displayValue = props.displayValue ?? defaultDisplayValue;
-  let panelClassName = props.panelClassName ?? "";
+  let panelClassName = props.className ?? "";
   if (!panelClassName.includes("w-")) {
     panelClassName += " w-[var(--input-width)]";
   }
@@ -147,7 +147,7 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
           <ComboboxInput
             placeholder={props.placeholder ?? defaultPlaceholder}
             autoComplete="off"
-            className="w-full rounded-lg border border-input bg-white/5 py-1.5 pr-8 pl-3 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+            className={`w-full rounded-lg border border-input py-1.5 pr-8 pl-3 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${props.className}`}
             onChange={handleTextInputChange}
             onBlur={() => setInputValue("")}
             displayValue={(dateSuggestion) =>
@@ -171,7 +171,7 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
             <ComboboxOptions
               anchor="bottom"
               transition
-              className={`rounded-xl border border-input bg-white/5 p-1.5 [--anchor-gap:var(--spacing-1)] empty:invisible transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0 ${panelClassName}`}
+              className={`rounded-xl border border-input p-1.5 [--anchor-gap:var(--spacing-1)] empty:invisible transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0 ${panelClassName}`}
             >
               {result.map((suggestionResult) => (
                 <ComboboxOption

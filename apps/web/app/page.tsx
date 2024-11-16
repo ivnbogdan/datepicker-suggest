@@ -63,7 +63,7 @@ function Example() {
     date: Date;
     label: string;
   }): ReactNode => (
-    <div className="flex justify-between items-center">
+    <div className="flex w-full justify-between items-center">
       <span className="font-semibold">{suggestion.label}</span>
       <span className="text-sm text-gray-500">
         {format(suggestion.date, "MMMM d, yyyy")}
@@ -137,12 +137,12 @@ function Example() {
             </div>
             <TabPanels className="mt-2">
               <TabPanel>
-                <div className="p-4 bg-gray-800 rounded-lg flex justify-center">
+                <div className="p-4 rounded-lg flex justify-center">
                   <div className="w-72">
                     <DatePickerSuggest
                       value={dateValue}
                       onChange={setDateValue}
-                      panelClassName="text-white w-72"
+                      className="text-white w-72 bg-gray-800"
                     />
                   </div>
                 </div>
@@ -202,8 +202,11 @@ function Example() {
             </div>
             <TabPanels className="mt-2">
               <TabPanel>
-                <div className="p-4 bg-gray-800 rounded-lg">
-                  <DatePickerSuggest placeholder="Select a date..." />
+                <div className="p-4 rounded-lg">
+                  <DatePickerSuggest
+                    placeholder="Select a date..."
+                    className="bg-gray-800"
+                  />
                 </div>
               </TabPanel>
               <TabPanel>
@@ -261,10 +264,11 @@ function Example() {
             </div>
             <TabPanels className="mt-2">
               <TabPanel>
-                <div className="p-4 bg-gray-800 rounded-lg">
+                <div className="p-4 rounded-lg">
                   <DatePickerSuggest
                     suggestionRenderer={customRenderer}
                     placeholder="Select a date..."
+                    className="text-white w-72 bg-gray-800"
                   />
                 </div>
               </TabPanel>
