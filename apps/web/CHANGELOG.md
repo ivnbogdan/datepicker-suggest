@@ -1,5 +1,11 @@
 # web
 
+## 0.1.10
+
+### Patch Changes
+
+- e069cf8: add demo video
+
 ## 0.1.9
 
 ### Patch Changes
