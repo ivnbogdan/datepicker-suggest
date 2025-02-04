@@ -1,5 +1,11 @@
 # @datepicker-suggest/react
 
+## 0.0.11
+
+### Patch Changes
+
+- Add error state border
+
 ## 0.0.10
 
 ### Patch Changes

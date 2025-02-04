@@ -1,5 +1,13 @@
 # web
 
+## 0.1.12
+
+### Patch Changes
+
+- Add error state border
+- Updated dependencies
+  - @datepicker-suggest/react@0.0.11
+
 ## 0.1.11
 
 ### Patch Changes
