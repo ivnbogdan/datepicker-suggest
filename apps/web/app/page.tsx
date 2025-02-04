@@ -74,12 +74,15 @@ function Example() {
   return (
     <div>
       <main>
-        <div className="mx-auto h-screen pt-20 container px-4 py-8 max-w-4xl">
+        <div className="mx-auto container px-4 py-8 max-w-4xl">
           <h1 className="text-4xl font-bold mb-6">DatePickerSuggest</h1>
 
           <p className="mb-6">
             DatePickerSuggest is a next generation date picker which builds a
             date based on natural language.
+            <br />
+            No more using a calendar an clicking through months and years.
+            Simply type in the desired date.
           </p>
 
           <video
@@ -108,13 +111,13 @@ function Example() {
             {installationCode}
           </SyntaxHighlighter>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4">Basic example</h2>
+          <h2 className="text-2xl font-semibold mt-8 mb-4">Usage</h2>
           <p className="mb-4">
             Here's a basic example of how to use the{" "}
             <code className="bg-gray-700 text-gray-100 px-1 py-0.5 rounded">
               DatePickerSuggest
             </code>{" "}
-            component:
+            component
           </p>
           <TabGroup>
             <div className="flex justify-end mb-2">
@@ -169,17 +172,15 @@ function Example() {
             </TabPanels>
           </TabGroup>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4">Styling</h2>
-          <h3 className="text-xl font-semibold mt-6 mb-3">
-            Using data attributes
-          </h3>
+          <h3 className="text-xl font-semibold mt-6 mb-3">Styling</h3>
           <p className="mb-4">
             The{" "}
             <code className="bg-gray-700 text-gray-100 px-1 py-0.5 rounded">
-              DatePickerSuggest
+              className
             </code>{" "}
-            component exposes various data attributes that you can use for
-            styling. For example:
+            property is applied to both the input and the dropdown panel.
+            <br />
+            In the example below a specific background color is applied
           </p>
           <TabGroup>
             <div className="flex justify-end mb-2">
@@ -215,7 +216,7 @@ function Example() {
                 <div className="p-4 rounded-lg">
                   <DatePickerSuggest
                     placeholder="Select a date..."
-                    className="bg-gray-800"
+                    className="bg-stone-700"
                   />
                 </div>
               </TabPanel>
@@ -231,8 +232,6 @@ function Example() {
             </TabPanels>
           </TabGroup>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4">Examples</h2>
-
           <h3 className="text-xl font-semibold mt-6 mb-3">
             Custom suggestion renderer
           </h3>
@@ -241,7 +240,7 @@ function Example() {
             <code className="bg-gray-700 text-gray-100 px-1 py-0.5 rounded">
               suggestionRenderer
             </code>{" "}
-            prop:
+            prop
           </p>
           <TabGroup>
             <div className="flex justify-end mb-2">
@@ -294,17 +293,14 @@ function Example() {
             </TabPanels>
           </TabGroup>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4">Component API</h2>
-          <h3 className="text-xl font-semibold mt-6 mb-3">DatePickerSuggest</h3>
-          <p className="mb-4">
-            The main date picker component with suggestion capabilities.
-          </p>
+          <h3 className="text-xl font-semibold mt-6 mb-3">
+            Component properties API
+          </h3>
           <table className="w-full border-collapse border border-gray-600 mb-6">
             <thead>
               <tr className="bg-gray-800">
                 <th className="border border-gray-600 px-4 py-2">Prop</th>
                 <th className="border border-gray-600 px-4 py-2">Type</th>
-                <th className="border border-gray-600 px-4 py-2">Default</th>
                 <th className="border border-gray-600 px-4 py-2">
                   Description
                 </th>
@@ -318,30 +314,119 @@ function Example() {
                 <td className="border border-gray-600 px-4 py-2">
                   <code>Date</code>
                 </td>
-                <td className="border border-gray-600 px-4 py-2">-</td>
                 <td className="border border-gray-600 px-4 py-2">
                   The currently selected date.
                 </td>
               </tr>
               <tr>
                 <td className="border border-gray-600 px-4 py-2">
-                  <code>suggestion</code>
+                  <code>initialSuggestion</code>
                 </td>
                 <td className="border border-gray-600 px-4 py-2">
-                  <code>DateSuggestion</code>
+                  <code>string</code>
                 </td>
-                <td className="border border-gray-600 px-4 py-2">-</td>
                 <td className="border border-gray-600 px-4 py-2">
-                  The current date suggestion.
+                  The starting value. Should be a string which will calculate
+                  the date relatively to the current time.
+                  <br />
+                  E.g. 'Today', 'Last month', etc
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-600 px-4 py-2">
+                  <code>optionsSuggestions</code>
+                </td>
+                <td className="border border-gray-600 px-4 py-2">
+                  <code>string[]</code>
+                </td>
+                <td className="border border-gray-600 px-4 py-2">
+                  An array of strings as the initial suggestions.
+                  <br />
+                  These will first display when the dropdown is focused to
+                  inform the user about the possible values.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-600 px-4 py-2">
+                  <code>placeholder</code>
+                </td>
+                <td className="border border-gray-600 px-4 py-2">
+                  <code>string</code>
+                </td>
+                <td className="border border-gray-600 px-4 py-2">
+                  The placeholder string displayed when the input is empty.
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-gray-600 px-4 py-2">
+                  <code>className</code>
+                </td>
+                <td className="border border-gray-600 px-4 py-2">
+                  <code>string</code>
+                </td>
+                <td className="border border-gray-600 px-4 py-2">
+                  The classes that will be applied to both the input and the
+                  dropdown panel.
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4">Styled examples</h2>
+          <h3 className="text-xl font-semibold mt-6 mb-3">Time support</h3>
           <p className="mb-6">
-            For more styled examples and advanced usage patterns, check out our
-            component gallery or refer to the full documentation.
+            Time support is limited for now, but defining a time is possible.
+            <br />
+            After typing the date, a time can be defined by using{" "}
+            <code className="bg-gray-700 text-gray-100 px-1 py-0.5 rounded">
+              am
+            </code>{" "}
+            or{" "}
+            <code className="bg-gray-700 text-gray-100 px-1 py-0.5 rounded">
+              pm
+            </code>{" "}
+            keywords or the{" "}
+            <code className="bg-gray-700 text-gray-100 px-1 py-0.5 rounded">
+              :
+            </code>{" "}
+            separator between hours and minutes.
+          </p>
+
+          <h3 className="text-xl font-semibold mt-6 mb-3">Dependencies</h3>
+          <div className="mb-6">
+            Currently the{" "}
+            <code className="bg-gray-700 text-gray-100 px-1 py-0.5 rounded">
+              @datepicker-suggest/react
+            </code>{" "}
+            package has a peer dependency to
+            <ul>
+              <li>
+                <code className="bg-gray-700 text-gray-100 px-1 py-0.5 rounded">
+                  @headlessui/react
+                </code>{" "}
+                for the dropdown
+              </li>
+              <li>
+                <code className="bg-gray-700 text-gray-100 px-1 py-0.5 rounded">
+                  date-fns
+                </code>{" "}
+                for date manipulations
+              </li>
+            </ul>
+            <br />
+            Future work implies making the dropdown implementation pluginable to
+            be able to use other dropdowns instead.
+          </div>
+
+          <h3 className="text-xl font-semibold mt-6 mb-3">Contributing</h3>
+          <p className="mb-6">
+            The project is very much still in it's infancy and any contributions
+            are welcomed.
+            <br />
+            There is still much room for improvements, on both suggesting new
+            values, and adding new features.
+            <br />
+            The suggestions core is split in a separate package, so extending to
+            other frameworks besides react can leverage existing logic.
           </p>
         </div>
       </main>
