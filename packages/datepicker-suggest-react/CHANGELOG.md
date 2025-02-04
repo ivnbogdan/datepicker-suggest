@@ -1,5 +1,11 @@
 # @datepicker-suggest/react
 
+## 0.0.12
+
+### Patch Changes
+
+- 963e615: Add error state & polish examples
+
 ## 0.0.11
 
 ### Patch Changes

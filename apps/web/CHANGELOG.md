@@ -1,5 +1,13 @@
 # web
 
+## 0.1.13
+
+### Patch Changes
+
+- 963e615: Add error state & polish examples
+- Updated dependencies [963e615]
+  - @datepicker-suggest/react@0.0.12
+
 ## 0.1.12
 
 ### Patch Changes
