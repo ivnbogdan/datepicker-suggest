@@ -37,6 +37,11 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
+      - name: Commit lock file changes
+        run: |
+          git add pnpm-lock.yaml
+          git commit -m "chore: update pnpm-lock.yaml" || true
+
       - name: Create and publish versions
         uses: changesets/action@v1
         with:
