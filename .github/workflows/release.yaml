@@ -37,6 +37,11 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
+      - name: Setup Git
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
       - name: Commit lock file changes
         run: |
           git add pnpm-lock.yaml
