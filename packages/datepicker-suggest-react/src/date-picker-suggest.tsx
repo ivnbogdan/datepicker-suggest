@@ -25,6 +25,7 @@ type DatePickerSuggestProps = {
   initialSuggestion?: string;
   optionsSuggestions?: string[];
   placeholder?: string;
+  isError?: boolean;
 };
 
 const defaultPlaceholder = "Start typing a date or time...";
@@ -147,7 +148,9 @@ export const DatePickerSuggest = (props: DatePickerSuggestProps) => {
           <ComboboxInput
             placeholder={props.placeholder ?? defaultPlaceholder}
             autoComplete="off"
-            className={`w-full rounded-lg border border-input py-1.5 pr-8 pl-3 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${props.className}`}
+            className={`w-full rounded-lg border py-1.5 pr-8 pl-3 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${
+              props.isError ? "border-red-500" : "border-input"
+            } ${props.className}`}
             onChange={handleTextInputChange}
             onBlur={() => setInputValue("")}
             displayValue={(dateSuggestion) =>
