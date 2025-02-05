@@ -1,5 +1,12 @@
 # web
 
+## 0.1.14
+
+### Patch Changes
+
+- Updated dependencies [fc1c102]
+  - @datepicker-suggest/react@0.0.13
+
 ## 0.1.13
 
 ### Patch Changes

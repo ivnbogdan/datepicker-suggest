@@ -1,6 +1,6 @@
 {
   "name": "@datepicker-suggest/react",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "type": "module",
   "scripts": {
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
