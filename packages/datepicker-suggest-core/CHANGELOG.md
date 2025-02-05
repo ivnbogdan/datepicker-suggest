@@ -1,5 +1,11 @@
 # @datepicker-suggest/core
 
+## 0.0.9
+
+### Patch Changes
+
+- fc1c102: ci build changes
+
 ## 0.0.8
 
 ### Patch Changes
