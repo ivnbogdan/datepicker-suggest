@@ -37,6 +37,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
+      - name: Build packages
+        run: pnpm build
+
       - name: Setup Git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -46,6 +49,7 @@ jobs:
         run: |
           git add pnpm-lock.yaml
           git commit -m "chore: update pnpm-lock.yaml" || true
+          git push
 
       - name: Create and publish versions
         uses: changesets/action@v1
