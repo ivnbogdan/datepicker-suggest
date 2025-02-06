@@ -3,11 +3,12 @@ import {
   addMonths,
   endOfDay,
   endOfMonth,
-  setDay,
+  isFuture,
   startOfDay,
   startOfMonth,
   startOfYear,
   subMonths,
+  subYears,
 } from "date-fns";
 import { InputToken } from "../models/input-tokens.js";
 import {
@@ -17,6 +18,21 @@ import {
   YearMetaApplier,
 } from "../models/matcher.js";
 import { SuggestionStrategy } from "./suggestion-strategy.js";
+
+const monthNameToIndex: Record<string, number> = {
+  january: 0,
+  february: 1,
+  march: 2,
+  april: 3,
+  may: 4,
+  june: 5,
+  july: 6,
+  august: 7,
+  september: 8,
+  october: 9,
+  november: 10,
+  december: 11,
+};
 
 class ThisMonth extends Matcher {
   name = "This month";
@@ -28,199 +44,77 @@ class ThisMonth extends Matcher {
 }
 
 abstract class CalendarMonthMatcherBase extends Matcher {
+  additionalDateModifiers: MetaDateModifier[] = [
+    YearMetaApplier,
+    TimeMetaApplier,
+  ];
+
+  getDateValue(inputTokens: InputToken[]): Date {
+    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
+    const monthIndex = monthNameToIndex[this.name.toLowerCase()] ?? 0;
+    const candidate = addDays(
+      startOfDay(addMonths(startOfYear(new Date()), monthIndex)),
+      +dayCount - 1
+    );
+
+    return isFuture(candidate) ? subYears(candidate, 1) : candidate;
+  }
+
   protected override getUpdatedName(inputTokens: InputToken[]): string {
     const dayCount = inputTokens.find((x) => x.type === "index")?.value;
     if (!dayCount) {
       return this.name;
     }
-
     return `${dayCount} ${this.name}`;
   }
 }
 
 class JanuaryMatcher extends CalendarMonthMatcherBase {
   name = "January";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "0";
-    return setDay(startOfDay(startOfYear(new Date())), +dayCount);
-  }
 }
+
 class FebruaryMatcher extends CalendarMonthMatcherBase {
   name = "February";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 1)),
-      +dayCount - 1
-    );
-  }
 }
+
 class MarchMatcher extends CalendarMonthMatcherBase {
   name = "March";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 2)),
-      +dayCount - 1
-    );
-  }
 }
+
 class AprilMatcher extends CalendarMonthMatcherBase {
   name = "April";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 3)),
-      +dayCount - 1
-    );
-  }
 }
+
 class MayMatcher extends CalendarMonthMatcherBase {
   name = "May";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 4)),
-      +dayCount - 1
-    );
-  }
 }
+
 class JuneMatcher extends CalendarMonthMatcherBase {
   name = "June";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 5)),
-      +dayCount - 1
-    );
-  }
 }
+
 class JulyMatcher extends CalendarMonthMatcherBase {
   name = "July";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 6)),
-      +dayCount - 1
-    );
-  }
 }
 
 class AugustMatcher extends CalendarMonthMatcherBase {
   name = "August";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 7)),
-      +dayCount - 1
-    );
-  }
 }
 
 class SeptemberMatcher extends CalendarMonthMatcherBase {
   name = "September";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 8)),
-      +dayCount - 1
-    );
-  }
 }
 
 class OctoberMatcher extends CalendarMonthMatcherBase {
   name = "October";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 9)),
-      +dayCount - 1
-    );
-  }
 }
 
 class NovemberMatcher extends CalendarMonthMatcherBase {
   name = "November";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 10)),
-      +dayCount - 1
-    );
-  }
 }
 
 class DecemberMatcher extends CalendarMonthMatcherBase {
   name = "December";
-  additionalDateModifiers: MetaDateModifier[] = [
-    YearMetaApplier,
-    TimeMetaApplier,
-  ];
-
-  getDateValue(inputTokens: InputToken[]): Date {
-    const dayCount = inputTokens.find((x) => x.type === "index")?.value ?? "1";
-    return addDays(
-      startOfDay(addMonths(startOfYear(new Date()), 11)),
-      +dayCount - 1
-    );
-  }
 }
 
 class LastMatcher extends Matcher {
