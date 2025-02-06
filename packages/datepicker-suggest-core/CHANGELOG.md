@@ -1,5 +1,11 @@
 # @datepicker-suggest/core
 
+## 0.0.10
+
+### Patch Changes
+
+- 5fa6332: When a month matcher produces a date in the future, use the previous year instead
+
 ## 0.0.9
 
 ### Patch Changes

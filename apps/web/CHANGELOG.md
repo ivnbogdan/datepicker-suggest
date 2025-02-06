@@ -1,5 +1,11 @@
 # web
 
+## 0.1.15
+
+### Patch Changes
+
+- @datepicker-suggest/react@0.0.14
+
 ## 0.1.14
 
 ### Patch Changes
